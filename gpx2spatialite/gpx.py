@@ -86,10 +86,12 @@ def extractpoints(filepath, get_loc_func=None, skip_wpts=False):
                 for point in segment.points:
                     lat = point.latitude
                     lon = point.longitude
-                    # check here for scientific notation and fix
-                    geom_str = "Point({0} {1})".format(lon, lat)
 
-                    pts_str = "{0} {1}".format(lon, lat)
+                    # format lon: scientific notation is triggered when <
+                    # 0.0001 which causes a NULL when entering into db
+                    geom_str = "Point({:.10f} {})".format(lon, lat)
+                    pts_str = "{:.10f} {}".format(lon, lat)
+
                     pts_strs.append(pts_str)
 
                     time = point.time
