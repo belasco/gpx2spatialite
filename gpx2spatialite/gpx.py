@@ -86,6 +86,7 @@ def extractpoints(filepath, get_loc_func=None, skip_wpts=False):
                 for point in segment.points:
                     lat = point.latitude
                     lon = point.longitude
+                    # check here for scientific notation and fix
                     geom_str = "Point({0} {1})".format(lon, lat)
 
                     pts_str = "{0} {1}".format(lon, lat)
