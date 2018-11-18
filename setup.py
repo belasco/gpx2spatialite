@@ -32,12 +32,13 @@ def readme():
     with open('README.rst') as readme_file:
         return readme_file.read()
 
+
 setup(description='gpx2spatialite',
       long_description=readme(),
       author='Peter Vasil, Daniel Belasco Rogers',
       url='https://github.com/ptrv/gpx2spatialite',
       download_url='https://github.com/ptrv/gpx2spatialite',
-      author_email='mail@petervasil.net',
+      author_email='dan@planbperformance.net',
       version=__version__,
       install_requires=['gpxpy'],
       packages=['gpx2spatialite'],
