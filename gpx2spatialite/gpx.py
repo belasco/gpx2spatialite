@@ -89,8 +89,12 @@ def extractpoints(filepath, get_loc_func=None, skip_wpts=False):
 
                     # format lon: scientific notation is triggered when <
                     # 0.0001 which causes a NULL when entering into db
-                    geom_str = "Point({:.10f} {})".format(lon, lat)
-                    pts_str = "{:.10f} {}".format(lon, lat)
+                    if abs(lon) < 0.0001:
+                        geom_str = "Point({:.10f} {})".format(lon, lat)
+                        pts_str = "{:.10f} {}".format(lon, lat)
+                    else:
+                        geom_str = "Point({} {})".format(lon, lat)
+                        pts_str = "{} {}".format(lon, lat)
 
                     pts_strs.append(pts_str)
 
