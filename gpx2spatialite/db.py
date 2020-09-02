@@ -210,11 +210,23 @@ def insert_segment(cursor, seg_uuid):
     cursor.execute(sql)
 
 
+def get_unknown(cursor):
+    """Get the uid of the 'unknown' location
+
+    The 'unknown' location is not always uid 1"""
+    sql = ("SELECT citydef_uid FROM citydefs WHERE city='Unknown'")
+    cursor.execute(sql)
+    unknown_uid = cursor.fetchone()[0]
+
+    return unknown_uid 
+    
+
 def get_location(cursor, lon, lat):
     """
     Query the database citydefs table to see if the point is within
-    one. Return 1 (Unknown) if not
+    one. Return unknown uid if not
     """
+    unknown_uid = get_unknown(cursor)
     sql = ("SELECT citydef_uid FROM citydefs WHERE within"
            "(ST_GeomFromText('Point({0} {1})'), geom)").format(lon, lat)
     cursor.execute(sql)
@@ -222,7 +234,7 @@ def get_location(cursor, lon, lat):
         loc_id = cursor.fetchone()[0]
     except TypeError:
         # print "unknown city"
-        loc_id = 1
+        loc_id = unknown_uid
 
     return loc_id
 
@@ -293,7 +305,8 @@ def reset_cities(cursor):
     """
     reset all cities to 1 (unknown)
     """
-    sql = "UPDATE trackpoints SET citydef_uid = 1"
+    unknown_uid = get_unknown(cursor)
+    sql = "UPDATE trackpoints SET citydef_uid = {}".format(unknown_uid)
     cursor.execute(sql)
 
 
@@ -302,13 +315,13 @@ def get_cityid_trackpoint_pairs(cursor, unknown_only):
     Get a list of trackpoint ids and the location id of that
     trackpoint from the citydefs table
     """
-
+    unknown_uid = get_unknown(cursor)
     sql = ("SELECT citydefs.citydef_uid, trackpoints.trkpt_uid "
            "FROM citydefs, trackpoints "
            "WHERE within(trackpoints.geom, citydefs.geom)")
 
     if unknown_only is True:
-        sql += " AND trackpoints.citydef_uid = 1"
+        sql += " AND trackpoints.citydef_uid = {}".format(unknown_uid)
 
     results = cursor.execute(sql)
     locations_list = results.fetchall()
