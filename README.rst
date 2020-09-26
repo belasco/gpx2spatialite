@@ -31,13 +31,14 @@ are related. You can read more detail about the reason to represent
 data from a GPX file like this here:
 <http://planbperformance.net/dan/blog/?p=984>
 
-The compulsory 'user' argument is to import gpx files from
-different users into the same database. This is because
-gpx2spatialite was written as an importer for DrawingLife
+The compulsory 'user' argument is to import gpx files from different
+users into the same database. This is because gpx2spatialite was
+written as an importer for DrawingLife
 <https://github.com/ptrv/drawinglife> which is a visualisation
-software written by Peter Vasil for Daniel Belasco Rogers' and
-Sophia New's art project of recording everywhere they go with a GPS
-since 2003 and 2007 respectively (<http://belasconew.com/works/lifedrawing/>)
+software written by Peter Vasil for Daniel Belasco Rogers' and Sophia
+New's art project of recording everywhere they go with a GPS since
+2003 and 2007 respectively
+(<https://planbperformance.net/works/lifedrawing/>)
 
 If you only have one user to enter, just pick any name and import
 all files under this name.
