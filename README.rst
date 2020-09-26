@@ -23,13 +23,13 @@ A script for importing GPX files into a SpatiaLite database.
 
 Uses Tomo Krajina's gpx module. gpx2spatialite takes a single or
 folder full of gpx files and imports them into a spatialite spatial
-database. On importing, a file is hashed and entered into a table
-to make sure that a file with identical contents is not added
-twice. The spatial information from trackpoints is stored in two
-tables in the spatialite database, trackpoints and tracklines which
-are related. You can read more detail about the reason to represent
-data from a GPX file like this here:
-<http://planbperformance.net/dan/blog/?p=984>
+database. On importing, a file is hashed and entered into a table to
+make sure that a file with identical contents is not added twice. The
+spatial information from trackpoints is stored in two tables in the
+spatialite database, trackpoints and tracklines which are related. You
+can read more detail about the reason to represent data from a GPX
+file like this here: <http://danblog.planbperformance.net/?p=984> and
+<https://danblog.planbperformance.net/?p=1127>
 
 The compulsory 'user' argument is to import gpx files from different
 users into the same database. This is because gpx2spatialite was
