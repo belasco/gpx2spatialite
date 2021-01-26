@@ -82,24 +82,27 @@ def extractpoints(filepath, get_loc_func=None, skip_wpts=False):
                 segs.append(seg_uuid)
                 trksegpt_id = 0
                 pts_strs = []
+                # lastpoint is the point before the current one. None
+                # if this is the first point in the segment
                 lastpoint = None
                 for point in segment.points:
+                    # format lon/lat: scientific notation is triggered when <
+                    # 0.0001 which causes a NULL when entering into db
+                    # now using gpxpy make_str method
                     lat = point.latitude
                     lon = point.longitude
-
-                    # format lon: scientific notation is triggered when <
-                    # 0.0001 which causes a NULL when entering into db
-                    if abs(lon) < 0.0001:
-                        geom_str = "Point({:.10f} {})".format(lon, lat)
-                        pts_str = "{:.10f} {}".format(lon, lat)
-                    else:
-                        geom_str = "Point({} {})".format(lon, lat)
-                        pts_str = "{} {}".format(lon, lat)
+                    # format lon / lat: scientific notation is
+                    # triggered when < 0.0001 which causes a NULL when
+                    # entering into db
+                    flat = gpxpy.utils.make_str(lat)
+                    flon = gpxpy.utils.make_str(lon)
+                    geom_str = "Point({} {})".format(flon, flat)
+                    pts_str = "{} {}".format(flon, flat)
 
                     pts_strs.append(pts_str)
 
                     time = point.time
-                    ele = point.elevation
+                    ele = gpxpy.utils.make_str(point.elevation)
                     if ele is None:
                         print("No elevation recorded for "
                               "{0} - assuming 0".format(time))
@@ -153,12 +156,13 @@ def extractpoints(filepath, get_loc_func=None, skip_wpts=False):
             wptline = []
             wpt_lat = wpt.latitude
             wpt_lon = wpt.longitude
-            wpt_geom_str = "Point({0} {1})".format(wpt_lon, wpt_lat)
+            wpt_geom_str = "Point({0} {1})".format(gpxpy.utils.make_str(wpt_lon),
+                                                   gpxpy.utils.make_str(wpt_lat))
 
             wpt_name = wpt.name
             wpt_symbol = wpt.symbol
             wpt_time = wpt.time
-            wpt_ele = wpt.elevation
+            wpt_ele = gpxpy.utils.make_str(wpt.elevation)
             if wpt_ele is None:
                 print("No elevation recorded for "
                       "{0} - assuming 0".format(wpt_time))
