@@ -76,6 +76,8 @@ def extractpoints(filepath, get_loc_func=None, skip_wpts=False):
         return trkpts, trklines, 0, 0, wpts, segs
 
     firsttimestamp, lasttimestamp = gpx_obj.get_time_bounds()
+    firsttimestamp = firsttimestamp.strftime(DATE_FORMAT)
+    lasttimestamp = lasttimestamp.strftime(DATE_FORMAT)
 
     for track in gpx_obj.tracks:
         for segment in track.segments:
