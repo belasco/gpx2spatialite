@@ -33,6 +33,7 @@ from . import helper
 
 DATE_FORMAT = '%Y-%m-%d %H:%M:%S'
 
+
 def get_gpx_file(file_path):
     """Return GPX file."""
     try:
