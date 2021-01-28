@@ -131,6 +131,10 @@ def extractpoints(filepath, get_loc_func=None, skip_wpts=False):
 
                 timestamp_start, timestamp_end \
                     = segment.get_time_bounds()
+                # Make sure date formats do not have seconds (a gpxpy
+                # thing now)
+                timestamp_start = timestamp_start.strftime(DATE_FORMAT)
+                timestamp_end = timestamp_end.strftime(DATE_FORMAT)
                 length_m = segment.length_2d()
                 time_sec = segment.get_duration()
                 try:
@@ -156,7 +160,7 @@ def extractpoints(filepath, get_loc_func=None, skip_wpts=False):
 
             wpt_name = wpt.name
             wpt_symbol = wpt.symbol
-            wpt_time = wpt.time
+            wpt_time = wpt.time.strftime(DATE_FORMAT)
             wpt_ele = gpxpy.utils.make_str(wpt.elevation)
             if wpt_ele is None:
                 print("No elevation recorded for "
