@@ -19,6 +19,7 @@ def main():
     """
     """
     starttime = time.time()
+    # gpx_path = 'tests/data/track-with-small-floats.gpx'
     gpx_path = 'tests/data/GreenwichMeridianWalk-Viking.gpx'
     extracted_points = gpx.extractpoints(gpx_path)
 

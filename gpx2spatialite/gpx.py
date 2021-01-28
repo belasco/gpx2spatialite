@@ -31,6 +31,7 @@ except ImportError:
 import uuid
 from . import helper
 
+DATE_FORMAT = '%Y-%m-%d %H:%M:%S'
 
 def get_gpx_file(file_path):
     """Return GPX file."""
@@ -91,18 +92,14 @@ def extractpoints(filepath, get_loc_func=None, skip_wpts=False):
                     # now using gpxpy make_str method
                     lat = point.latitude
                     lon = point.longitude
-                    # format lon / lat: scientific notation is
-                    # triggered when < 0.0001 which causes a NULL when
-                    # entering into db
-                    flat = gpxpy.utils.make_str(lat)
-                    flon = gpxpy.utils.make_str(lon)
-                    geom_str = "Point({} {})".format(flon, flat)
-                    pts_str = "{} {}".format(flon, flat)
+                    geom_str = "Point({} {})".format(lon, lat)
+                    pts_str = "{} {}".format(lon, lat)
 
                     pts_strs.append(pts_str)
 
-                    time = point.time
-                    ele = gpxpy.utils.make_str(point.elevation)
+                    time = point.time.strftime(DATE_FORMAT)
+                    ele = point.elevation
+
                     if ele is None:
                         print("No elevation recorded for "
                               "{0} - assuming 0".format(time))
