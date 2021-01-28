@@ -88,9 +88,6 @@ def extractpoints(filepath, get_loc_func=None, skip_wpts=False):
                 # if this is the first point in the segment
                 lastpoint = None
                 for point in segment.points:
-                    # format lon/lat: scientific notation is triggered when <
-                    # 0.0001 which causes a NULL when entering into db
-                    # now using gpxpy make_str method
                     lat = point.latitude
                     lon = point.longitude
                     geom_str = "Point({} {})".format(lon, lat)
