@@ -50,3 +50,4 @@ nosetests.xml
 !bin/gpx2spatialite_updatelocs
 
 gpx2spatialite/data/sql/insert_citydefs-old.sql
+env
